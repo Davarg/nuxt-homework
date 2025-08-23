@@ -5,12 +5,12 @@ const { title } = defineProps<{
 </script>
 
 <template>
-  <div class="button">
+  <div :class="$style.button">
     {{ title }}
   </div>
 </template>
 
-<style scoped>
+<style module>
 .button {
   background-color: #191919;
   color: white;
