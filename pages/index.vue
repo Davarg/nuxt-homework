@@ -1,9 +1,18 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { createDefaultPost } from "~/models/Post";
+import type { Post } from "~/models/Post";
+
+const items: Post[] = [
+  createDefaultPost(),
+  createDefaultPost(),
+  createDefaultPost(),
+];
+</script>
 
 <template>
-    <div class="main-container">
-        Index
-    </div>
+  <div class="main-container">
+    <PostList :items="items" />
+  </div>
 </template>
 
 <style scoped>

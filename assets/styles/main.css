@@ -2,14 +2,21 @@
     --font: 'Roboto', sans-serif;
     --bg-color: white;
     --font-color: #292929;
+    --font-tertiary-color: #757575;
     --font-color-hover: #292929b6;
     --border-color: #E6E6E6;
-    --margin-base: 32px;
+    --margin-base: 22px;
 }
 
 body {
     background-color: var(--bg-color);
     font-family: var(--font);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
