@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Post } from "~/models/Post";
 
-const { items } = defineProps<{
-  items: Post[];
+const { items = [] } = defineProps<{
+  items?: Post[] | undefined;
 }>();
 </script>
 
