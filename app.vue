@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <NuxtPage />
+    <NuxtPage :class="$style.main_container" />
   </NuxtLayout>
 </template>
 
@@ -13,5 +13,13 @@
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
+}
+</style>
+
+<style module>
+.main_container {
+  margin-top: var(--margin-base);
+  margin-bottom: var(--margin-base);
+  margin-left: 9.4vw;
 }
 </style>

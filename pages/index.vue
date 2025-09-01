@@ -1,24 +1,16 @@
 <script setup lang="ts">
-import { createDefaultPost } from "~/models/Post";
 import type { Post } from "~/models/Post";
 
-const items: Post[] = [
-  createDefaultPost(),
-  createDefaultPost(),
-  createDefaultPost(),
-];
+const config = useRuntimeConfig();
+
+const { data } = await useFetch<{
+  posts: Post[];
+}>(config.public.apiBase + "/posts")
 </script>
 
 <template>
-  <div class="main-container">
-    <PostList :items="items" />
-  </div>
+  <PostList :items="data?.posts" />
 </template>
 
 <style scoped>
-.main-container {
-  margin-top: var(--margin-base);
-  margin-bottom: var(--margin-base);
-  margin-left: 9.4vw;
-}
 </style>

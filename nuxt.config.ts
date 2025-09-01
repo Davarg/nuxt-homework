@@ -5,18 +5,28 @@ export default defineNuxtConfig({
   css: ["~/assets/styles/main.css"],
   app: {
     pageTransition: {
-      name: 'page',
-      mode: 'out-in'
-    }
+      name: "page",
+      mode: "out-in",
+    },
   },
   icon: {
     customCollections: [
       {
         prefix: "custom",
-        dir: "./assets/icons"
-      }
-    ]
+        dir: "./assets/icons",
+      },
+    ],
   },
-
-  modules: ["@nuxt/eslint", "@nuxt/fonts", "@nuxt/image", "@nuxt/scripts", '@nuxt/icon'],
+  runtimeConfig: {
+    public: {
+      apiBase: "",
+    },
+  },
+  modules: [
+    "@nuxt/eslint",
+    "@nuxt/fonts",
+    "@nuxt/image",
+    "@nuxt/scripts",
+    "@nuxt/icon",
+  ],
 });

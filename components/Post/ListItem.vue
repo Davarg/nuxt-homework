@@ -8,28 +8,30 @@ const { item, shouldShowDivider } = defineProps<{
 </script>
 
 <template>
-  <li :class="$style.container">
-    <div :class="$style.item">
-      <div :class="$style.header">
-        <Icon :class="$style.icon" name="custom:logo" />
-        <label :class="$style.author">{{ item.author }}</label>
-        <NuxtTime
-          :class="$style.date"
-          :datetime="item.date"
-          locale="ru-RU"
-          relative
-        />
+  <NuxtLink :to="`posts/${item.id}`">
+    <li :class="$style.container">
+      <div :class="$style.item">
+        <div :class="$style.header">
+          <Icon :class="$style.icon" name="custom:logo" />
+          <label :class="$style.author">Огурчик</label>
+          <NuxtTime
+            :class="$style.date"
+            :datetime="item.published_at"
+            locale="ru-RU"
+            relative
+          />
+        </div>
+        <div :class="$style.body">
+          <div :class="$style.title">{{ item.title }}</div>
+          <div :class="$style.text">{{ item.content }}</div>
+        </div>
+        <div :class="$style.footer">
+          <CommonRate :likes="item.likes" :dislikes="item.dislikes" />
+        </div>
       </div>
-      <div :class="$style.body">
-        <div :class="$style.title">{{ item.title }}</div>
-        <div :class="$style.text">{{ item.body }}</div>
-      </div>
-      <div :class="$style.footer">
-        <CommonRate :likes="item.likes" :dislikes="item.dislikes" />
-      </div>
-    </div>
-    <div v-if="shouldShowDivider" :class="$style.divider" />
-  </li>
+      <div v-if="shouldShowDivider" :class="$style.divider" />
+    </li>
+  </NuxtLink>
 </template>
 
 <style module>

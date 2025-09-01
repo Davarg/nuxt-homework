@@ -7,11 +7,11 @@ const { likes, dislikes } = defineProps<{
 
 <template>
   <div :class="$style.container">
-    <div v-if="likes > 0">
+    <div>
       <label :class="$style.numbers">{{ likes }}</label>
       <Icon :class="$style.icon" name="simple-line-icons:like" />
     </div>
-    <div v-if="dislikes > 0">
+    <div>
       <label :class="$style.numbers">{{ dislikes }}</label>
       <Icon :class="$style.icon" name="simple-line-icons:dislike" />
     </div>
