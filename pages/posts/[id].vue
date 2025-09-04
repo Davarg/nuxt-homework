@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Post } from "~/models/Post";
+import { RatingAction } from "~/models/Rating";
 
 const route = useRoute();
 const id = ref(route.params.id);

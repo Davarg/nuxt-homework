@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { RatingAction } from '~/models/Rating';
+
 const {
   likes,
   dislikes,

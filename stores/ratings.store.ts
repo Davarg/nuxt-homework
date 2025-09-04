@@ -1,4 +1,6 @@
 import { defineStore } from "pinia";
+import { RatingAction } from "~/models/Rating";
+import type { Rating } from "~/models/Rating";
 
 export const useRatingsStore = defineStore(
   "ratings",
