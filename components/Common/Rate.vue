@@ -1,19 +1,52 @@
 <script setup lang="ts">
-const { likes, dislikes } = defineProps<{
+import { RatingAction } from '~/models/Rating';
+
+const {
+  likes,
+  dislikes,
+  ratingAction = null,
+} = defineProps<{
   likes: number;
   dislikes: number;
+  ratingAction?: RatingAction;
+}>();
+
+const emit = defineEmits<{
+  (e: "ratingAction", action: RatingAction): void;
 }>();
 </script>
 
 <template>
   <div :class="$style.container">
-    <div>
-      <label :class="$style.numbers">{{ likes }}</label>
-      <Icon :class="$style.icon" name="simple-line-icons:like" />
+    <div
+      :class="$style.icon_container"
+      @click.stop.prevent="emit('ratingAction', RatingAction.liked)"
+    >
+      <div :class="$style.numbers">{{ likes }}</div>
+      <Icon
+        :class="[
+          $style.icon,
+          ratingAction != null &&
+            ratingAction == RatingAction.liked &&
+            $style.selected_like,
+        ]"
+        name="simple-line-icons:like"
+      />
     </div>
-    <div>
-      <label :class="$style.numbers">{{ dislikes }}</label>
-      <Icon :class="$style.icon" name="simple-line-icons:dislike" />
+    <div
+      :class="$style.icon_container"
+      @click.stop.prevent="emit('ratingAction', RatingAction.disliked)"
+    >
+      <div :class="$style.numbers">{{ dislikes }}</div>
+      <Icon
+        :class="[
+          $style.icon,
+          ratingAction != null &&
+            ratingAction == RatingAction.disliked &&
+            $style.selected_dislike,
+        ]"
+        name="simple-line-icons:dislike"
+      />
     </div>
   </div>
 </template>
@@ -35,5 +68,19 @@ const { likes, dislikes } = defineProps<{
   width: 18px;
   height: 18px;
   margin-left: 6px;
+}
+
+.icon_container {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+}
+
+.selected_like {
+  color: greenyellow;
+}
+
+.selected_dislike {
+  color: red;
 }
 </style>

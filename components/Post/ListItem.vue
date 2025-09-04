@@ -1,15 +1,42 @@
 <script setup lang="ts">
 import type { Post } from "~/models/Post";
+import { RatingAction } from "~/models/Rating";
 
 const { item, shouldShowDivider } = defineProps<{
   item: Post;
   shouldShowDivider: boolean;
 }>();
+
+const ratingsStore = useRatingsStore();
+const ratingAction = ref<RatingAction | undefined>(
+  ratingsStore.actionFor(item.id)
+);
+
+const likes = ref<number>(item.likes);
+const dislikes = ref<number>(item.dislikes);
+
+async function onRatingAction(action: RatingAction) {
+  switch (action) {
+    case RatingAction.liked:
+      if (await ratingsStore.like(item.id)) {
+        ratingAction.value = RatingAction.liked;
+        likes.value += 1;
+      }
+      break;
+
+    case RatingAction.disliked:
+      if (await ratingsStore.dislike(item.id)) {
+        ratingAction.value = RatingAction.disliked;
+        dislikes.value += 1;
+      }
+      break;
+  }
+}
 </script>
 
 <template>
-  <NuxtLink :to="`posts/${item.id}`">
-    <li :class="$style.container">
+  <li :class="$style.container">
+    <NuxtLink :to="`posts/${item.id}`">
       <div :class="$style.item">
         <div :class="$style.header">
           <Icon :class="$style.icon" name="custom:logo" />
@@ -26,12 +53,17 @@ const { item, shouldShowDivider } = defineProps<{
           <div :class="$style.text">{{ item.content }}</div>
         </div>
         <div :class="$style.footer">
-          <CommonRate :likes="item.likes" :dislikes="item.dislikes" />
+          <CommonRate
+            :likes="likes"
+            :dislikes="dislikes"
+            :rating-action="ratingAction"
+            @rating-action="onRatingAction"
+          />
         </div>
       </div>
       <div v-if="shouldShowDivider" :class="$style.divider" />
-    </li>
-  </NuxtLink>
+    </NuxtLink>
+  </li>
 </template>
 
 <style module>
@@ -108,5 +140,6 @@ const { item, shouldShowDivider } = defineProps<{
   background-color: var(--border-color);
   height: 1px;
   width: 100%;
+  margin-top: 20px;
 }
 </style>

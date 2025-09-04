@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Post } from "~/models/Post";
+import { RatingAction } from "~/models/Rating";
 
 const route = useRoute();
 const id = ref(route.params.id);
@@ -9,6 +10,34 @@ const config = useRuntimeConfig();
 const { data: item } = await useFetch<Post>(
   config.public.apiBase + "/posts/" + id.value
 );
+
+const ratingsStore = useRatingsStore();
+const ratingAction = ref<RatingAction | undefined>(
+  ratingsStore.actionFor(item.value?.id ?? -1)
+);
+
+const likes = ref<number>(item.value?.likes ?? 0);
+const dislikes = ref<number>(item.value?.dislikes ?? 0);
+
+async function onRatingAction(action: RatingAction) {
+  if (item.value) {
+    switch (action) {
+      case RatingAction.liked:
+        if (await ratingsStore.like(item.value.id)) {
+          ratingAction.value = RatingAction.liked;
+          likes.value += 1;
+        }
+        break;
+
+      case RatingAction.disliked:
+        if (await ratingsStore.dislike(item.value.id)) {
+          ratingAction.value = RatingAction.disliked;
+          dislikes.value += 1;
+        }
+        break;
+    }
+  }
+}
 </script>
 
 <template>
@@ -29,7 +58,12 @@ const { data: item } = await useFetch<Post>(
         <div :class="$style.text">{{ item.content }}</div>
       </div>
       <div :class="$style.footer">
-        <CommonRate :likes="item.likes" :dislikes="item.dislikes" />
+        <CommonRate
+          :likes="likes"
+          :dislikes="dislikes"
+          :rating-action="ratingAction"
+          @rating-action="onRatingAction"
+        />
       </div>
     </div>
   </div>
