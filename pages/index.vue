@@ -7,20 +7,20 @@ const config = useRuntimeConfig();
 const route = useRoute();
 const router = useRouter();
 
-const defaultSortString = route.query.sort || "date";
-const sort = ref<Sort>(defaultSortString as Sort);
-const page = ref<number>(0);
+const sort = ref<Sort>((route.query.sort || "date") as Sort);
+const page = ref<number>(parseInt(route.query.page?.toString() ?? "1"));
 
 const query = computed(() => {
   return {
-    page_size: route.query.page_size ?? 10,
-    page: route.query.page ?? 0,
+    page_size: route.query.page_size ?? 2,
+    page: route.query.page ?? 1,
     sort: route.query.sort || "date",
   };
 });
 
 const { data } = await useFetch<{
   posts: Post[];
+  total_pages: number;
 }>(config.public.apiBase + "/posts", {
   query,
 });
@@ -59,10 +59,53 @@ watch([page, sort], () => {
       <div :class="$style.divider" />
     </div>
     <PostList :items="data?.posts" />
+    <div :class="$style.pages">
+      <div
+        v-for="index in data?.total_pages ?? 0"
+        :key="index"
+        :class="$style.page"
+      >
+        <div
+          :class="[$style.page_index, page == index && $style.selected]"
+          @click="page = index"
+        >
+          {{ index }}
+        </div>
+        <div v-show="index != data?.total_pages" :class="$style.page_divider" />
+      </div>
+    </div>
   </div>
 </template>
 
 <style module>
+.pages {
+  margin-top: 38px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
+}
+
+.page {
+  font-weight: 300;
+  color: var(--font-tertiary-color);
+  font-size: 1.125rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.page_index {
+  cursor: pointer;
+}
+
+.page_divider {
+  background-color: var(--border-color);
+  width: 1px;
+  height: 100%;
+  margin-left: 16px;
+}
+
 .filters_container {
   margin-bottom: 38px;
 }
