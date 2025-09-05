@@ -3,6 +3,12 @@ import { useDebounceFn } from "@vueuse/core";
 import type { Post } from "~/models/Post";
 import { Sort } from "~/models/Sort";
 
+useSeoMeta({
+  title: "Свежие новости",
+  description: "Страница самых свежих новостей",
+  ogDescription: "Страница самых свежих новостей",
+});
+
 const config = useRuntimeConfig();
 const route = useRoute();
 const router = useRouter();

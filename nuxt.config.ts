@@ -4,6 +4,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/styles/main.css"],
   app: {
+    head: {
+      title: "Домашка для Братишки",
+      titleTemplate: "%s | VoteApp",
+    },
     pageTransition: {
       name: "page",
       mode: "out-in",

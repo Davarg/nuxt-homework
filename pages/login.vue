@@ -1,4 +1,10 @@
 <script setup lang="ts">
+useSeoMeta({
+  title: "Добро пожаловать",
+  description: "Страница входа",
+  ogDescription: "Страница входа",
+});
+
 const usersStore = useUsersStore();
 const login = ref<string>();
 const password = ref<string>();
