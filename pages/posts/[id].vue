@@ -11,6 +11,12 @@ const { data: item } = await useFetch<Post>(
   config.public.apiBase + "/posts/" + id.value
 );
 
+useSeoMeta({
+  title: `${item.value?.title}`,
+  description: `Очень важная новость ${item.value?.title}`,
+  ogDescription: `Очень важная новость ${item.value?.title}`,
+});
+
 const ratingsStore = useRatingsStore();
 const ratingAction = ref<RatingAction | undefined>(
   ratingsStore.actionFor(item.value?.id ?? -1)
