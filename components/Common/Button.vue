@@ -21,7 +21,6 @@ const { title } = defineProps<{
   font-weight: 500;
   cursor: pointer;
   border-radius: 20px;
-  margin-top: 24px;
 }
 
 .button:hover {
