@@ -21,5 +21,6 @@
   margin-top: var(--margin-base);
   margin-bottom: var(--margin-base);
   margin-left: 9.4vw;
+  margin-right: 9.4vw;
 }
 </style>

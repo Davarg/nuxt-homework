@@ -63,5 +63,6 @@ a {
 .error-button {
   width: 18.8125rem;
   height: 2.5625rem;
+  margin-top: 24px;
 }
 </style>
