@@ -1,7 +1,9 @@
-export default defineNuxtRouteMiddleware(() => {
-  const token = useCookie<{ token: string }>("users");
+import type { User } from "~/models/User";
 
-  if (!token.value) {
+export default defineNuxtRouteMiddleware(() => {
+  const data = useCookie<{ token: string, user: User }>("users");
+
+  if (!data.value.token) {
     return navigateTo("/login");
   }
 });
